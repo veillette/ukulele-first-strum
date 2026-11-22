@@ -31,6 +31,61 @@ export const chords = {
     shape: [null, [2, 1], [3, 3], [2, 2]],
     tip: 'Place your index and middle fingers at fret 2. Reach your ring finger one fret farther on the E string.',
   },
+  A: {
+    name: 'A major',
+    shape: [[2, 2], [1, 1], null, null],
+    tip: 'Start from Am and add your index finger at fret 1 on the C string.',
+  },
+  D: {
+    name: 'D major',
+    shape: [[2, 1], [2, 2], [2, 3], null],
+    tip: 'Fit three fingertips into fret 2. Angle your fingers slightly if they feel cramped, and check that the A string rings open.',
+  },
+  Dm: {
+    name: 'D minor',
+    shape: [[2, 2], [2, 3], [1, 1], null],
+    tip: 'Start from F and add your ring finger at fret 2 on the C string.',
+  },
+  Em: {
+    name: 'E minor',
+    shape: [null, [4, 3], [3, 2], [2, 1]],
+    tip: 'Start with your index finger on A, then place your middle and ring fingers one string and one fret farther up at each step.',
+  },
+  A7: {
+    name: 'A dominant seventh',
+    shape: [null, [1, 1], null, null],
+    tip: 'Start from A and lift your middle finger. Try switching from A7 to D.',
+  },
+  C7: {
+    name: 'C dominant seventh',
+    shape: [null, null, null, [1, 1]],
+    tip: 'Press the A string at fret 1 with your index finger. Try switching from C7 to F.',
+  },
+  D7: {
+    name: 'D dominant seventh',
+    shape: [[2, 1], [2, 1], [2, 1], [3, 3]],
+    tip: 'Lay your index finger across the G, C, and E strings at fret 2. Add your ring finger at fret 3 on A.',
+  },
+  E7: {
+    name: 'E dominant seventh',
+    shape: [[1, 1], [2, 2], null, [2, 3]],
+    tip: 'Pluck the E string by itself and adjust your fingers until it rings freely. Then try switching from E7 to Am.',
+  },
+  Cmaj7: {
+    name: 'C major seventh',
+    shape: [null, null, null, [2, 2]],
+    tip: 'Use your middle finger at fret 2 on A. Alternate with C to hear how moving one fret changes the sound.',
+  },
+  Gmaj7: {
+    name: 'G major seventh',
+    shape: [null, [2, 1], [2, 2], [2, 3]],
+    tip: 'Place three fingertips side by side at fret 2 and leave the G string open.',
+  },
+  Am7: {
+    name: 'A minor seventh',
+    shape: [null, null, null, null],
+    tip: 'Strum all four strings open. Put your middle finger back at fret 2 on G to return to Am.',
+  },
 };
 
 export const songs = {

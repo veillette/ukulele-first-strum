@@ -197,20 +197,26 @@ function markCurrent(links, selected) {
 
 function chordDiagram(shape) {
   const positions = [60, 100, 140, 180];
+  const fretCount = Math.max(3, ...shape.map((mark) => mark?.[0] ?? 0));
+  const gridBottom = 46 + fretCount * 36;
+  const fretsMarkup = Array.from({ length: fretCount }, (_, index) => {
+    const y = 82 + index * 36;
+    return `<path d="M60 ${y} H180" stroke="currentColor" stroke-width="1.5"/>
+      <text x="39" y="${y - 13}" font-size="13" text-anchor="middle">${index + 1}</text>`;
+  }).join('');
   const stringsMarkup = positions.map((x, i) => {
     const marker = shape[i];
     const y = marker && 64 + (marker[0] - 1) * 36;
     return `<text x="${x}" y="16" text-anchor="middle">${strings[i].name}</text>
-      <path d="M${x} 46 V154" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M${x} 46 V${gridBottom}" stroke="currentColor" stroke-width="1.5"/>
       ${marker
         ? `<circle cx="${x}" cy="${y}" r="12" class="dot"/>
            <text x="${x}" y="${y}" dy=".35em" text-anchor="middle" class="finger">${marker[1]}</text>`
         : `<circle cx="${x}" cy="32" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>`}`;
   }).join('');
-  return `<svg class="diagram" viewBox="0 0 240 168" aria-hidden="true">
+  return `<svg class="diagram" viewBox="0 0 240 ${gridBottom + 14}" aria-hidden="true">
     <path d="M60 46 H180" stroke="currentColor" stroke-width="4"/>
-    <path d="M60 82 H180 M60 118 H180 M60 154 H180" stroke="currentColor" stroke-width="1.5"/>
-    <g font-size="13" text-anchor="middle"><text x="39" y="69">1</text><text x="39" y="105">2</text><text x="39" y="141">3</text></g>
+    ${fretsMarkup}
     ${stringsMarkup}
   </svg>`;
 }
