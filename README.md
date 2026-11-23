@@ -1,6 +1,6 @@
 # Ukulele Starter
 
-A beginner-friendly ukulele practice app. Tune the four strings, learn 16 chords with fingering diagrams and audio, and practice traditional songs and a chord-change exercise. Lesson progress stays in the current browser. The tuner processes microphone audio on the device.
+A beginner-friendly ukulele practice app. Tune the four strings, learn chords with fingering diagrams and audio, and practice traditional songs and a chord-change exercise. Lesson progress stays in the current browser. The tuner processes microphone audio on the device.
 
 Use **Copy chord link** or **Copy song link** to open that selection directly from a bookmark or message.
 
