@@ -1,6 +1,6 @@
 # Ukulele Starter
 
-A beginner-friendly ukulele practice app. Tune the four strings, learn 16 chords with fingering diagrams and audio, and practice two traditional songs and a chord-change exercise. Lesson progress stays in the current browser. The tuner processes microphone audio on the device.
+A beginner-friendly ukulele practice app. Tune the four strings, learn 16 chords with fingering diagrams and audio, and practice traditional songs and a chord-change exercise. Lesson progress stays in the current browser. The tuner processes microphone audio on the device.
 
 ## Run locally
 
@@ -26,4 +26,4 @@ After a deployment, the existing version finishes the current session. Once its 
 
 ## Content
 
-The song sheets use original beginner-friendly chord arrangements of the traditional songs “Row, Row, Row Your Boat” and “Mary Had a Little Lamb.” The exercise and lesson text were written for this app.
+The song sheets use original beginner-friendly chord arrangements of traditional songs, including “Frère Jacques” and “Twinkle, Twinkle, Little Star.” The exercise and lesson text were written for this app.
