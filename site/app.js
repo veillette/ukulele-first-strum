@@ -39,10 +39,18 @@ function initLessons() {
 
 const mic = byId('mic');
 const micStatus = byId('mic-status');
+const tunerDisplay = byId('tuning-display');
 const needle = byId('meter-needle');
 const reading = byId('pitch-reading');
+const pitchOffset = byId('pitch-offset');
 const pitchStatus = byId('pitch-status');
 const toneStatus = byId('tuner-audio-status');
+const meterLimit = 50;
+const tuningFeedback = {
+  Flat: { state: 'flat', message: 'Flat · Tighten slightly' },
+  'In tune': { state: 'in-tune', message: 'In tune ✓', announcement: 'In tune.' },
+  Sharp: { state: 'sharp', message: 'Sharp · Loosen slightly' },
+};
 let stringIndex = 0;
 let micSession;
 let referenceEnds = 0;
@@ -69,9 +77,32 @@ function selectString(index) {
 }
 
 function resetReading(message) {
+  delete tunerDisplay.dataset.state;
   needle.hidden = true;
+  pitchOffset.hidden = true;
   setText(reading, message);
   setText(pitchStatus, message);
+}
+
+function showPitch(cents) {
+  const state = tuningState(cents);
+  const feedback = tuningFeedback[state];
+  if (!feedback) {
+    resetReading(state);
+    return;
+  }
+
+  const position = Math.max(-meterLimit, Math.min(meterLimit, cents));
+  needle.style.setProperty('--needle', `${50 + 50 * position / meterLimit}%`);
+  needle.hidden = false;
+  tunerDisplay.dataset.state = feedback.state;
+
+  const rounded = Math.round(cents);
+  const offset = rounded > 0 ? `+${rounded}` : rounded < 0 ? `−${Math.abs(rounded)}` : '0';
+  setText(pitchOffset, `${offset} cents`);
+  pitchOffset.hidden = false;
+  setText(reading, feedback.message);
+  setText(pitchStatus, feedback.announcement ?? feedback.message);
 }
 
 function stopMic(message = 'Microphone is off.') {
@@ -93,25 +124,14 @@ function watchPitch(session, analyser, rate) {
     analyser.getFloatTimeDomainData(buffer);
     const frequency = detectPitch(buffer, rate);
     if (frequency === null) {
-      if (!session.lastPitch || performance.now() - session.lastPitch > 400) {
+      if (!session.lastPitch || performance.now() - session.lastPitch > 800) {
         resetReading('Pluck the selected string.');
       }
       return;
     }
     session.lastPitch = performance.now();
     const target = midiToFrequency(strings[stringIndex].midi);
-    const cents = centsFromTarget(frequency, target);
-    const state = tuningState(cents);
-    if (Math.abs(cents) <= 350) {
-      needle.style.setProperty('--needle', `${50 + Math.max(-50, Math.min(50, cents))}%`);
-      needle.hidden = false;
-    } else {
-      needle.hidden = true;
-    }
-    const signedCents = Math.round(cents);
-    const offset = signedCents > 0 ? `+${signedCents}` : String(signedCents);
-    setText(reading, `${state} · ${offset} cents`);
-    setText(pitchStatus, state);
+    showPitch(centsFromTarget(frequency, target));
   }, 100);
 }
 

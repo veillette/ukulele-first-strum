@@ -81,9 +81,19 @@
           <h2>Choose a string</h2>
           <div id="string-buttons" class="picker" role="group" aria-label="Tuning strings"></div>
           <p id="tuning-target" class="target"></p>
-          <div class="meter" aria-hidden="true"><span id="meter-needle" class="needle" hidden></span></div>
-          <div class="meter-labels" aria-hidden="true"><span>Flat</span><span>In tune</span><span>Sharp</span></div>
-          <p id="pitch-reading" class="reading" aria-hidden="true"></p>
+          <div id="tuning-display" class="tuning-display" aria-hidden="true">
+            <div class="meter-labels"><span>Flat</span><span>In tune</span><span>Sharp</span></div>
+            <div class="meter">
+              <div class="meter-track"></div>
+              <div class="meter-ticks"><span></span><span></span><span></span><span></span><span></span></div>
+              <span id="meter-needle" class="needle" hidden></span>
+            </div>
+            <div class="meter-scale"><span>−50</span><span>0</span><span>+50</span></div>
+            <div class="pitch-feedback">
+              <p id="pitch-reading" class="reading"></p>
+              <p id="pitch-offset" class="pitch-offset" hidden></p>
+            </div>
+          </div>
           <p id="pitch-status" class="sr-only" role="status"></p>
           <div class="actions">
             <button id="mic" class="button primary" type="button">Start microphone</button>
