@@ -1,0 +1,14 @@
+{
+  "routes": [
+    {
+      "path": "#chords/C",
+      "selector": "#chord-detail h2",
+      "text": "C major"
+    },
+    {
+      "path": "#songs/first-changes",
+      "selector": "#song-detail h2",
+      "text": "First chord changes"
+    }
+  ]
+}

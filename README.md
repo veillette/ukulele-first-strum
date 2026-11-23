@@ -2,15 +2,19 @@
 
 A beginner-friendly ukulele practice app. Tune the four strings, learn 16 chords with fingering diagrams and audio, and practice traditional songs and a chord-change exercise. Lesson progress stays in the current browser. The tuner processes microphone audio on the device.
 
-## Run locally
+Use **Copy chord link** or **Copy song link** to open that selection directly from a bookmark or message.
 
-Use Node.js 24 or newer. There are no dependencies to install.
+## Check, build, and preview
+
+Use Node.js 24 or newer and Python 3. The site has no npm dependencies.
 
 ```sh
-npm test
+npm run check
 npm run build
 python3 -m http.server 8000 --directory dist
 ```
+
+The Pages workflow runs the deployment smoke test against `dist/`. Run `node .github/site-smoke.mjs dist --assets-only` to check the offline file list locally.
 
 Open [http://localhost:8000](http://localhost:8000). The microphone and service worker require HTTPS or localhost.
 

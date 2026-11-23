@@ -281,8 +281,9 @@ function renderChord(key) {
       <button type="button" class="button primary">${icon('listen')} Hear ${key}</button>
       <p>${tip}</p>
       <p class="notice" role="status" hidden></p>
+      <button type="button" class="button secondary" data-copy-link="#chords/${key}">Copy chord link</button><span class="copy-status" role="status"></span>
     </div>`;
-  detail.querySelector('button').addEventListener('click', async () => {
+  detail.querySelector('.primary').addEventListener('click', async () => {
     const status = detail.querySelector('.notice');
     status.hidden = true;
     try {
@@ -304,7 +305,8 @@ function renderSong(key) {
   </li>`).join('');
   byId('song-detail').innerHTML = `<h2>${name}</h2><p>${intro}</p>
     <ol class="song-grid" role="list" aria-label="Song measures">${chart}</ol>
-    <p>${next}</p>`;
+    <p>${next}</p>
+    <button type="button" class="button secondary" data-copy-link="#songs/${key}">Copy song link</button><span class="copy-status" role="status"></span>`;
   songSelect.value = key;
 }
 
