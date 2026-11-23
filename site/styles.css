@@ -217,9 +217,9 @@ main { padding-block: 1rem 1.75rem; }
 
 .chord-controls { display: grid; gap: .65rem; margin-bottom: .8rem; }
 #chord-picker a { padding-inline: .2rem; }
-.chord-select { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: .6rem; }
-.chord-select label { font-weight: 700; }
-.chord-select select {
+.route-select { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: .6rem; }
+.route-select label { font-weight: 700; }
+.route-select select {
   width: 100%;
   min-height: 3rem;
   border: 1px solid #a3b5a9;
@@ -238,8 +238,7 @@ main { padding-block: 1rem 1.75rem; }
 .fingering-list li + li { margin-top: .3rem; }
 .card .diagram-key { font-size: .875rem; }
 .chord-practice .button { width: 100%; }
-.song-picker { display: grid; margin-bottom: .8rem; }
-.song-picker a { justify-content: flex-start; padding-block: .4rem; }
+.song-picker { grid-template-columns: minmax(0, 1fr); max-width: 33rem; margin-bottom: .8rem; }
 .song-grid { display: grid; gap: .55rem; padding: 0; margin: 1rem 0; list-style: none; }
 .measure { display: flex; align-items: flex-start; gap: .7rem; background: var(--mint); border-radius: .75rem; padding: .65rem; min-width: 0; }
 .measure a { display: inline-grid; place-items: center; flex: 0 0 auto; min-width: 44px; min-height: 44px; padding-inline: .4rem; border-radius: .55rem; background: var(--sheet); font-weight: 800; }
@@ -270,7 +269,7 @@ main { padding-block: 1rem 1.75rem; }
   .lesson { padding: 0; }
   .tuner-help { padding-block: 0; }
   .actions, .song-grid, .lessons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .song-picker { display: flex; }
+  .song-picker { grid-template-columns: auto minmax(0, 1fr); }
   .chord-controls { grid-template-columns: minmax(12rem, .7fr) minmax(0, 1fr); align-items: center; }
   .chord-practice .button { width: auto; }
 }

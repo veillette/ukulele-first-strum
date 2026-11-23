@@ -230,18 +230,19 @@ function chordDiagram(shape) {
 }
 
 const fingers = ['index', 'middle', 'ring', 'pinky'];
-const chordLinks = addPickerLinks(byId('chord-picker'), 'chords', ['C', 'Am', 'F', 'G7'].map((key) => [key, key]));
-const chordSelect = byId('chord-select');
-for (const [key, { name }] of Object.entries(chords)) {
-  chordSelect.add(new Option(`${key} · ${name}`, key));
+function addRouteSelect(select, section, options) {
+  for (const [key, label] of options) select.add(new Option(label, key));
+  select.addEventListener('change', () => {
+    location.hash = `${section}/${select.value}`;
+  });
+  return select;
 }
-chordSelect.addEventListener('change', () => {
-  location.hash = `chords/${chordSelect.value}`;
-});
 
-const songLinks = addPickerLinks(byId('song-picker'), 'songs',
+const chordLinks = addPickerLinks(byId('chord-picker'), 'chords', ['C', 'Am', 'F', 'G7'].map((key) => [key, key]));
+const chordSelect = addRouteSelect(byId('chord-select'), 'chords',
+  Object.entries(chords).map(([key, { name }]) => [key, `${key} · ${name}`]));
+const songSelect = addRouteSelect(byId('song-select'), 'songs',
   Object.entries(songs).map(([key, { name }]) => [key, name]));
-for (const link of songLinks.values()) link.insertAdjacentHTML('afterbegin', icon('songs'));
 
 function renderChord(key) {
   const { name, shape, tip } = chords[key];
@@ -284,7 +285,7 @@ function renderSong(key) {
   byId('song-detail').innerHTML = `<h2>${name}</h2><p>${intro}</p>
     <ol class="song-grid" role="list" aria-label="Song measures">${chart}</ol>
     <p>${next}</p>`;
-  markCurrent(songLinks, key);
+  songSelect.value = key;
 }
 
 let currentSection = 'start';
@@ -297,7 +298,7 @@ function route({ focus = true } = {}) {
   currentSection = section;
   if (section !== 'tune') stopMic();
   if (section === 'chords') renderChord(Object.hasOwn(chords, key) ? key : 'C');
-  if (section === 'songs') renderSong(songLinks.has(key) ? key : 'first-changes');
+  if (section === 'songs') renderSong(Object.hasOwn(songs, key) ? key : 'first-changes');
   sections.forEach((id) => { byId(id).hidden = id !== section; });
   navLinks.forEach((link) => {
     if (link.hash === `#${section}`) link.setAttribute('aria-current', 'page');

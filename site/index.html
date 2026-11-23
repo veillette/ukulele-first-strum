@@ -130,7 +130,7 @@
       </div>
       <div class="chord-controls">
         <div id="chord-picker" class="picker" role="group" aria-label="Starter chords"></div>
-        <div class="chord-select">
+        <div class="route-select">
           <label for="chord-select">All chords</label>
           <select id="chord-select"></select>
         </div>
@@ -143,10 +143,13 @@
         <span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#songs"></use></svg></span>
         <div>
           <h1 id="songs-title" tabindex="-1">Practice songs</h1>
-          <p>Play the chord shown for each measure and count the beats out loud.</p>
+          <p>Tap a chord to see how to play it.</p>
         </div>
       </div>
-      <div id="song-picker" class="picker song-picker" role="group" aria-label="Practice songs"></div>
+      <div class="route-select song-picker">
+        <label for="song-select">Choose a song</label>
+        <select id="song-select"></select>
+      </div>
       <article id="song-detail" class="card tool-card" aria-label="Selected song"></article>
     </section>
   </main>
