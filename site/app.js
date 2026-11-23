@@ -4,7 +4,7 @@ import { centsFromTarget, detectPitch, midiToFrequency, tuningState } from './pi
 
 const byId = (id) => document.getElementById(id);
 const sections = ['start', 'tune', 'chords', 'songs'];
-const navLinks = document.querySelectorAll('nav a');
+const navLinks = document.querySelectorAll('.nav-link');
 const progressKey = 'ukulele-starter:lessons';
 const lessons = Array.from(document.querySelectorAll('[data-lesson]'));
 
@@ -14,8 +14,11 @@ function setText(node, text) {
 
 function initLessons() {
   const progress = byId('lesson-progress');
+  const meter = byId('lesson-meter');
+  meter.max = lessons.length;
   function update() {
     const complete = lessons.filter((lesson) => lesson.checked);
+    meter.value = complete.length;
     setText(progress, `${complete.length} of ${lessons.length} complete`);
   }
   try {
@@ -38,6 +41,7 @@ function initLessons() {
 }
 
 const mic = byId('mic');
+const micLabel = mic.querySelector('span');
 const micStatus = byId('mic-status');
 const needle = byId('meter-needle');
 const reading = byId('pitch-reading');
@@ -51,7 +55,8 @@ const stringButtons = strings.map(({ name, octave, midi }, index) => {
   const button = document.createElement('button');
   button.type = 'button';
   const label = document.createElement('span');
-  label.textContent = name + octave;
+  label.textContent = name;
+  button.setAttribute('aria-label', `${name}${octave}, ${Math.round(midiToFrequency(midi))} hertz`);
   const frequency = document.createElement('small');
   frequency.textContent = `${Math.round(midiToFrequency(midi))} Hz`;
   button.append(label, frequency);
@@ -81,7 +86,7 @@ function stopMic(message = 'Microphone is off.') {
   clearInterval(session.timer);
   session.input?.disconnect();
   session.stream?.getTracks().forEach((track) => track.stop());
-  setText(mic, 'Start microphone');
+  setText(micLabel, 'Start microphone');
   setText(micStatus, message);
   resetReading('Choose how you’d like to tune.');
 }
@@ -122,7 +127,7 @@ async function startMic() {
   }
   const session = {};
   micSession = session;
-  setText(mic, 'Cancel microphone');
+  setText(micLabel, 'Cancel microphone');
   setText(micStatus, 'Waiting for microphone permission.');
   try {
     const audio = await getAudio();
@@ -144,7 +149,7 @@ async function startMic() {
     analyser.fftSize = 2048;
     session.input = audio.createMediaStreamSource(stream);
     session.input.connect(analyser);
-    setText(mic, 'Stop microphone');
+    setText(micLabel, 'Stop microphone');
     setText(micStatus, 'Listening. Microphone audio stays on this device.');
     resetReading('Pluck the selected string.');
     watchPitch(session, analyser, audio.sampleRate);
@@ -177,12 +182,15 @@ byId('tone').addEventListener('click', async () => {
   }
 });
 
-function addPickers(group, entries) {
-  const picker = byId(group === 'chords' ? 'chord-picker' : 'song-picker');
-  return new Map(Object.entries(entries).map(([key, entry]) => {
+function icon(name) {
+  return `<svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#${name}"></use></svg>`;
+}
+
+function addPickerLinks(picker, group, choices) {
+  return new Map(choices.map(([key, label]) => {
     const link = document.createElement('a');
     link.href = `#${group}/${key}`;
-    link.textContent = group === 'chords' ? key : entry.name;
+    link.textContent = label;
     picker.append(link);
     return [key, link];
   }));
@@ -202,19 +210,19 @@ function chordDiagram(shape) {
   const fretsMarkup = Array.from({ length: fretCount }, (_, index) => {
     const y = 82 + index * 36;
     return `<path d="M60 ${y} H180" stroke="currentColor" stroke-width="1.5"/>
-      <text x="39" y="${y - 13}" font-size="13" text-anchor="middle">${index + 1}</text>`;
+      <text x="39" y="${y - 13}" font-size="16" text-anchor="middle">${index + 1}</text>`;
   }).join('');
   const stringsMarkup = positions.map((x, i) => {
     const marker = shape[i];
     const y = marker && 64 + (marker[0] - 1) * 36;
-    return `<text x="${x}" y="16" text-anchor="middle">${strings[i].name}</text>
+    return `<text x="${x}" y="18" font-size="17" text-anchor="middle">${strings[i].name}</text>
       <path d="M${x} 46 V${gridBottom}" stroke="currentColor" stroke-width="1.5"/>
       ${marker
-        ? `<circle cx="${x}" cy="${y}" r="12" class="dot"/>
+        ? `<circle cx="${x}" cy="${y}" r="13" class="dot"/>
            <text x="${x}" y="${y}" dy=".35em" text-anchor="middle" class="finger">${marker[1]}</text>`
         : `<circle cx="${x}" cy="32" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>`}`;
   }).join('');
-  return `<svg class="diagram" viewBox="0 0 240 ${gridBottom + 14}" aria-hidden="true">
+  return `<svg class="diagram" viewBox="22 0 180 ${gridBottom + 14}" aria-hidden="true">
     <path d="M60 46 H180" stroke="currentColor" stroke-width="4"/>
     ${fretsMarkup}
     ${stringsMarkup}
@@ -222,8 +230,18 @@ function chordDiagram(shape) {
 }
 
 const fingers = ['index', 'middle', 'ring', 'pinky'];
-const chordLinks = addPickers('chords', chords);
-const songLinks = addPickers('songs', songs);
+const chordLinks = addPickerLinks(byId('chord-picker'), 'chords', ['C', 'Am', 'F', 'G7'].map((key) => [key, key]));
+const chordSelect = byId('chord-select');
+for (const [key, { name }] of Object.entries(chords)) {
+  chordSelect.add(new Option(`${key} · ${name}`, key));
+}
+chordSelect.addEventListener('change', () => {
+  location.hash = `chords/${chordSelect.value}`;
+});
+
+const songLinks = addPickerLinks(byId('song-picker'), 'songs',
+  Object.entries(songs).map(([key, { name }]) => [key, name]));
+for (const link of songLinks.values()) link.insertAdjacentHTML('afterbegin', icon('songs'));
 
 function renderChord(key) {
   const { name, shape, tip } = chords[key];
@@ -232,13 +250,15 @@ function renderChord(key) {
     return `<li><strong>${strings[index].name}</strong> · ${position}</li>`;
   }).join('');
   const detail = byId('chord-detail');
-  detail.innerHTML = `${chordDiagram(shape)}
-    <div>
-      <h2>${name}</h2>
-      <p>Open circles mean open strings. The numbers inside filled circles tell you which fingers to use.</p>
+  detail.innerHTML = `<h2>${name}</h2>
+    <div class="chord-figure">${chordDiagram(shape)}</div>
+    <div class="fingering">
       <ul class="fingering-list">${rows}</ul>
+      <p class="diagram-key">Open circles mark open strings. Numbers show which fingers to use.</p>
+    </div>
+    <div class="chord-practice">
+      <button type="button" class="button primary">${icon('listen')} Hear ${key}</button>
       <p>${tip}</p>
-      <div class="actions" style="margin-top: 1rem"><button type="button" class="button primary">Hear ${key}</button></div>
       <p class="notice" role="status" hidden></p>
     </div>`;
   detail.querySelector('button').addEventListener('click', async () => {
@@ -252,13 +272,14 @@ function renderChord(key) {
     }
   });
   markCurrent(chordLinks, key);
+  chordSelect.value = key;
 }
 
 function renderSong(key) {
   const { name, beats, intro, next, measures } = songs[key];
   const chart = measures.map(([chord, text]) => `<li class="measure">
     <a href="#chords/${chord}" aria-label="See ${chord} fingering">${chord}</a>
-    <p>${text}</p><small>Beats ${beats}</small>
+    <div><p>${text}</p><small>Beats ${beats}</small></div>
   </li>`).join('');
   byId('song-detail').innerHTML = `<h2>${name}</h2><p>${intro}</p>
     <ol class="song-grid" role="list" aria-label="Song measures">${chart}</ol>
@@ -275,7 +296,7 @@ function route({ focus = true } = {}) {
   const changed = section !== currentSection;
   currentSection = section;
   if (section !== 'tune') stopMic();
-  if (section === 'chords') renderChord(chordLinks.has(key) ? key : 'C');
+  if (section === 'chords') renderChord(Object.hasOwn(chords, key) ? key : 'C');
   if (section === 'songs') renderSong(songLinks.has(key) ? key : 'first-changes');
   sections.forEach((id) => { byId(id).hidden = id !== section; });
   navLinks.forEach((link) => {

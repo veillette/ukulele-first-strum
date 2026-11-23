@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f8f5ee">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3eb">
   <meta name="description" content="Tune your ukulele, learn your first chords, and play a song at your own pace.">
   <title>Ukulele Starter</title>
   <link rel="manifest" href="./manifest.webmanifest">
@@ -17,11 +17,11 @@
   <header class="header">
     <div class="shell header-inner">
       <a class="brand" href="#start"><img src="./icons/ukulele-192.png" width="38" height="38" alt=""> Ukulele Starter</a>
-      <nav aria-label="Practice sections">
-        <a href="#start">Start here</a>
-        <a href="#tune">Tuner</a>
-        <a href="#chords">Chords</a>
-        <a href="#songs">Songs</a>
+      <nav class="section-nav" aria-label="Practice sections">
+        <a class="nav-link" href="#start"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#start"></use></svg><span>Start</span></a>
+        <a class="nav-link" href="#tune"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#tune"></use></svg><span>Tuner</span></a>
+        <a class="nav-link" href="#chords"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#chords"></use></svg><span>Chords</span></a>
+        <a class="nav-link" href="#songs"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#songs"></use></svg><span>Songs</span></a>
       </nav>
     </div>
   </header>
@@ -32,100 +32,128 @@
     <section id="start" aria-labelledby="start-title">
       <div class="hero">
         <div class="hero-copy">
-          <h1 id="start-title" tabindex="-1">Play your first<br> ukulele song.</h1>
-          <p>Pick up your uke, tune the four strings, and learn a few chords. Each step gives you something you can play right away.</p>
-          <a class="button primary" href="#tune">Tune my ukulele</a>
+          <h1 id="start-title" tabindex="-1">Play your first ukulele song.</h1>
+          <p>Tune four strings, learn a few chords, and play at your own pace.</p>
+          <a class="button primary" href="#tune"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#tune"></use></svg> Tune my ukulele</a>
         </div>
         <div class="string-art" aria-hidden="true">
-          <div class="fretboard-art"><span>G</span><span>C</span><span>E</span><span>A</span></div>
+          <div class="fretboard-art"><span><b>G</b></span><span><b>C</b></span><span><b>E</b></span><span><b>A</b></span></div>
         </div>
       </div>
       <div class="section-heading">
         <h2>Your first practice</h2>
-        <p id="lesson-progress" class="progress" role="status"></p>
+        <div class="lesson-progress">
+          <progress id="lesson-meter" max="4" value="0" aria-label="Practice completion"></progress>
+          <p id="lesson-progress" class="progress" role="status"></p>
+        </div>
       </div>
       <div class="lessons">
-        <article class="card lesson">
-          <h3>Get comfortable</h3>
-          <p>Sit upright and rest the body of the uke against your torso. With the neck in your fretting hand, look down at the strings. From closest to your face to closest to the floor, they’re G, C, E, A.</p>
-          <label><input type="checkbox" data-lesson="hold"> I can find all four strings</label>
-        </article>
-        <article class="card lesson">
-          <h3>Tune the strings</h3>
-          <p>Pluck one open string at a time. Turn its tuning peg a little, then pluck again. Start with G and work down toward A.</p>
-          <a href="#tune">Open the tuner</a>
-          <label><input type="checkbox" data-lesson="tune"> I’ve tuned all four strings</label>
-        </article>
-        <article class="card lesson">
-          <h3>Play a C chord</h3>
-          <p>Put your ring finger on the third fret of the A string, just behind the fret wire. Leave the other three strings open and brush across all four.</p>
-          <a href="#chords/C">See the C fingering</a>
-          <label><input type="checkbox" data-lesson="chord"> I can play a clear C chord</label>
-        </article>
-        <article class="card lesson">
-          <h3>Keep a steady beat</h3>
-          <p>Count “one, two, three, four” out loud. Brush from G to A with the back of your index fingernail on each number. Keep the motion small and your wrist relaxed.</p>
-          <a href="#songs/first-changes">Try the practice song</a>
-          <label><input type="checkbox" data-lesson="beat"> I can strum four steady beats</label>
-        </article>
+        <details class="card lesson">
+          <summary><span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#strings"></use></svg></span> <span>Get comfortable</span> <svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#chevron"></use></svg></summary>
+          <div class="lesson-body">
+            <p>Sit upright and rest the body of the uke against your torso. With the neck in your fretting hand, look down at the strings. From closest to your face to closest to the floor, they’re G, C, E, A.</p>
+            <label><input type="checkbox" data-lesson="hold"> I can find all four strings</label>
+          </div>
+        </details>
+        <details class="card lesson">
+          <summary><span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#tune"></use></svg></span> <span>Tune the strings</span> <svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#chevron"></use></svg></summary>
+          <div class="lesson-body">
+            <p>Pluck one open string at a time. Turn its tuning peg a little, then pluck again. Start with G and work down toward A.</p>
+            <a href="#tune">Open the tuner</a>
+            <label><input type="checkbox" data-lesson="tune"> I’ve tuned all four strings</label>
+          </div>
+        </details>
+        <details class="card lesson">
+          <summary><span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#chords"></use></svg></span> <span>Play a C chord</span> <svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#chevron"></use></svg></summary>
+          <div class="lesson-body">
+            <p>Put your ring finger on the third fret of the A string, just behind the fret wire. Leave the other three strings open and brush across all four.</p>
+            <a href="#chords/C">See the C fingering</a>
+            <label><input type="checkbox" data-lesson="chord"> I can play a clear C chord</label>
+          </div>
+        </details>
+        <details class="card lesson">
+          <summary><span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#beat"></use></svg></span> <span>Keep a steady beat</span> <svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#chevron"></use></svg></summary>
+          <div class="lesson-body">
+            <p>Count “one, two, three, four” out loud. Brush from G to A with the back of your index fingernail on each number. Keep the motion small and your wrist relaxed.</p>
+            <a href="#songs/first-changes">Try the practice song</a>
+            <label><input type="checkbox" data-lesson="beat"> I can strum four steady beats</label>
+          </div>
+        </details>
       </div>
     </section>
 
     <section id="tune" aria-labelledby="tune-title" hidden>
       <div class="page-intro">
-        <h1 id="tune-title" tabindex="-1">Tune your ukulele</h1>
-        <p>Choose a string and pluck it without pressing a fret. This tuner uses standard high-G tuning for soprano, concert, and tenor ukuleles.</p>
+        <span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#tune"></use></svg></span>
+        <div>
+          <h1 id="tune-title" tabindex="-1">Tune your ukulele</h1>
+          <p>Standard high-G tuning for soprano, concert, and tenor ukuleles.</p>
+        </div>
       </div>
       <div class="practice-grid">
-        <div class="card tool-card">
+        <div class="card tool-card tuner-card">
           <h2>Choose a string</h2>
           <div id="string-buttons" class="picker" role="group" aria-label="Tuning strings"></div>
-          <p id="tuning-target" class="target"></p>
-          <div class="meter" aria-hidden="true"><span id="meter-needle" class="needle" hidden></span></div>
-          <div class="meter-labels" aria-hidden="true"><span>Flat</span><span>In tune</span><span>Sharp</span></div>
-          <p id="pitch-reading" class="reading" aria-hidden="true"></p>
-          <p id="pitch-status" class="sr-only" role="status"></p>
+          <div class="tuner-display">
+            <p id="tuning-target" class="target"></p>
+            <div class="meter" aria-hidden="true"><span id="meter-needle" class="needle" hidden></span></div>
+            <div class="meter-labels" aria-hidden="true"><span>Flat</span><span>In tune</span><span>Sharp</span></div>
+            <p id="pitch-reading" class="reading" aria-hidden="true"></p>
+            <p id="pitch-status" class="sr-only" role="status"></p>
+          </div>
           <div class="actions">
-            <button id="mic" class="button primary" type="button">Start microphone</button>
-            <button id="tone" class="button secondary" type="button">Play reference note</button>
+            <button id="mic" class="button primary" type="button"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#mic"></use></svg> <span>Start microphone</span></button>
+            <button id="tone" class="button secondary" type="button"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#listen"></use></svg> Play reference note</button>
           </div>
           <p id="mic-status" class="notice" role="status">Microphone audio stays on this device.</p>
           <p id="tuner-audio-status" class="notice" role="status" hidden></p>
         </div>
-        <aside class="card tool-card">
-          <h2>Adjust one string at a time</h2>
+        <details class="card tool-card tuner-help">
+          <summary>How to tune a string</summary>
           <ol class="directions">
-            <li>Pluck the selected string gently and let it ring. Mute the other strings with your hand if they’re ringing too.</li>
+            <li>Pluck the selected string without pressing a fret. Let it ring. Mute the other strings with your hand if they’re ringing too.</li>
             <li><strong>Flat?</strong> Tighten slightly to raise the pitch. <strong>Sharp?</strong> Loosen slightly to lower it. Pluck again after each small turn.</li>
             <li>If tuning by ear, play the reference note, then pluck your string. Adjust until they sound the same.</li>
           </ol>
           <p>The high G is higher in pitch than C and E. If your uke has a low G or baritone tuning, use the tuning specified for your instrument.</p>
-        </aside>
+        </details>
       </div>
     </section>
 
     <section id="chords" aria-labelledby="chords-title" hidden>
       <div class="page-intro">
-        <h1 id="chords-title" tabindex="-1">Learn your first chords</h1>
-        <p>Start with C and Am. Pluck each string to check that it rings clearly, then strum all four together.</p>
+        <span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#chords"></use></svg></span>
+        <div>
+          <h1 id="chords-title" tabindex="-1">Ukulele chords</h1>
+          <p>Start with C and Am. Pluck each string before strumming all four.</p>
+        </div>
       </div>
-      <div id="chord-picker" class="picker route-picker" aria-label="Chord fingerings"></div>
+      <div class="chord-controls">
+        <div id="chord-picker" class="picker" role="group" aria-label="Starter chords"></div>
+        <div class="chord-select">
+          <label for="chord-select">All chords</label>
+          <select id="chord-select"></select>
+        </div>
+      </div>
       <article id="chord-detail" class="card chord-card" aria-label="Selected chord"></article>
     </section>
 
     <section id="songs" aria-labelledby="songs-title" hidden>
       <div class="page-intro">
-        <h1 id="songs-title" tabindex="-1">Play a simple song</h1>
-        <p>Go slowly. Play the chord written above each group of words and count each measure out loud as you practice.</p>
+        <span class="icon-badge"><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#songs"></use></svg></span>
+        <div>
+          <h1 id="songs-title" tabindex="-1">Practice songs</h1>
+          <p>Play the chord shown for each measure and count the beats out loud.</p>
+        </div>
       </div>
-      <div id="song-picker" class="picker route-picker" aria-label="Practice songs"></div>
+      <div id="song-picker" class="picker song-picker" role="group" aria-label="Practice songs"></div>
       <article id="song-detail" class="card tool-card" aria-label="Selected song"></article>
     </section>
   </main>
 
   <footer class="shell footer">
     <details id="install">
-      <summary>Install for offline practice</summary>
+      <summary><svg class="icon" aria-hidden="true"><use href="./icons/interface.svg#download"></use></svg> Install for offline practice</summary>
       <div class="install-copy">
         <p>On iPhone or iPad, open this site in Safari and choose <strong>Share → Add to Home Screen</strong>. On Android or desktop, use your browser’s install option when offered.</p>
         <button id="install-button" class="button secondary" type="button" hidden>Install Ukulele Starter</button>
