@@ -15,4 +15,6 @@ in the UI, manifest, and docs. Progress and cache keys keep the
   `node .github/site-smoke.mjs dist --assets-only`. Preview the build with
   `python3 -m http.server 8000 --directory dist`.
 - Make changes to shared deployment helpers in their canonical repo as
-  described in Origami's README.
+  described in Origami's README. `site/storage.js` is synced from aperitif
+  `js/storage.js`—edit storage there, then run
+  `node tools/sync-site-helpers.mjs --write` from Origami.
