@@ -18,6 +18,12 @@ The Pages workflow runs the deployment smoke test against `dist/`. Run `node .gi
 
 Open [http://localhost:8000](http://localhost:8000). The microphone and service worker require HTTPS or localhost.
 
+The Pages workflow also tests leaving the tuner while microphone permission is
+pending. To run that test locally after building, set `PLAYWRIGHT_MODULE` to the
+absolute path of an installed `playwright/index.mjs`, then run
+`npm run test:browser`. It uses Chromium and simulates permission and stream
+cleanup without a physical microphone.
+
 ## Deploy to GitHub Pages
 
 In **Settings → Pages**, select **GitHub Actions** as the publishing source. The workflow checks pull requests and deploys the contents of `dist/` on pushes to `main`. It can also be run manually from `main`. The workflow run shows the deployed URL.

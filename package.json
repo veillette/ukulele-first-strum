@@ -5,6 +5,7 @@
   "scripts": {
     "check": "npm test",
     "test": "node --test",
+    "test:browser": "node --test tests/browser/tuner.spec.mjs",
     "build": "node scripts/build.js"
   }
 }
