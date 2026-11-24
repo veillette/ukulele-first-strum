@@ -4,7 +4,7 @@ import test from 'node:test';
 import { runInNewContext } from 'node:vm';
 
 const template = await readFile(new URL('../scripts/sw.js', import.meta.url), 'utf8');
-const scope = 'https://veillette.github.io/ukulele-starter/';
+const scope = 'https://veillette.github.io/ukulele-first-strum/';
 const prefix = `ukulele-starter:${scope}:`;
 const assets = ['index.html', 'styles.css', 'app.js', 'icons/ukulele-192.png'];
 

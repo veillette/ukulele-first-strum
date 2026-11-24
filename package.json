@@ -1,7 +1,10 @@
 {
-  "name": "ukulele-starter",
+  "name": "ukulele-first-strum",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=26"
+  },
   "scripts": {
     "check": "npm test",
     "test": "node --test",

@@ -20,7 +20,7 @@ jobs:
     uses: ./.github/workflows/site-ci.yml
     with:
       output: dist
-      node-version: '24'
+      node-version-file: .nvmrc
       check: npm run check
       build: npm run build
       browser-tests: npm run test:browser

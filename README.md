@@ -1,12 +1,14 @@
 # Ukulele Starter
 
+Repository: `ukulele-first-strum`. The product name in the UI stays **Ukulele Starter**.
+
 A beginner-friendly ukulele practice app. Tune the four strings, learn chords with fingering diagrams and audio, and practice traditional songs and a chord-change exercise. Lesson progress stays in the current browser. The tuner processes microphone audio on the device.
 
 Use **Copy chord link** or **Copy song link** to open that selection directly from a bookmark or message.
 
 ## Check, build, and preview
 
-Use Node.js 24 or newer and Python 3. The site has no npm dependencies.
+Use Node.js 26 and Python 3. The site has no npm dependencies.
 
 ```sh
 npm run check
