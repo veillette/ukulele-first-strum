@@ -1,6 +1,7 @@
 import { getAudio, playNotes } from './audio.js';
 import { chords, songs, strings } from './content.js';
 import { centsFromTarget, detectPitch, midiToFrequency, tuningState } from './pitch.js';
+import { store } from './storage.js';
 
 const byId = (id) => document.getElementById(id);
 const sections = ['start', 'tune', 'chords', 'songs'];
@@ -21,20 +22,12 @@ function initLessons() {
     meter.value = complete.length;
     setText(progress, `${complete.length} of ${lessons.length} complete`);
   }
-  try {
-    const saved = JSON.parse(localStorage.getItem(progressKey) ?? '[]');
-    for (const lesson of lessons) lesson.checked = Array.isArray(saved) && saved.includes(lesson.dataset.lesson);
-  } catch {
-    // The checklist remains available during this visit.
-  }
+  const saved = store.get(progressKey, []);
   for (const lesson of lessons) {
+    lesson.checked = Array.isArray(saved) && saved.includes(lesson.dataset.lesson);
     lesson.addEventListener('change', () => {
       update();
-      try {
-        localStorage.setItem(progressKey, JSON.stringify(lessons.filter((item) => item.checked).map((item) => item.dataset.lesson)));
-      } catch {
-        // Storage can be disabled or full.
-      }
+      store.set(progressKey, lessons.filter((item) => item.checked).map((item) => item.dataset.lesson));
     });
   }
   update();
